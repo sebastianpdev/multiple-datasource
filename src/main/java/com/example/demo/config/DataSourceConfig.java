@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJpaRepositories(
         basePackages = "com.example.demo.repository",
-        transactionManagerRef = "transcationManager",
+        transactionManagerRef = "transactionManager",
         entityManagerFactoryRef = "entityManager")
 @EnableTransactionManagement
 public class DataSourceConfig {
@@ -45,6 +45,7 @@ public class DataSourceConfig {
         dataSource.setUrl(datasourceOneDetail.getUrl());
         dataSource.setUsername(datasourceOneDetail.getUsername());
         dataSource.setPassword(datasourceOneDetail.getPassword());
+        dataSource.setSchema("AUDITORIA");
         return dataSource;
     }
 
@@ -55,7 +56,7 @@ public class DataSourceConfig {
                 .build();
     }
 
-    @Bean(name = "transcationManager")
+    @Bean(name = "transactionManager")
     public JpaTransactionManager transactionManager(
             @Autowired @Qualifier("entityManager") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
         return new JpaTransactionManager(entityManagerFactoryBean.getObject());

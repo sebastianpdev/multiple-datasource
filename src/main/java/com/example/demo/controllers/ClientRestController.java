@@ -1,8 +1,12 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entity.Funcionario;
 import com.example.demo.entity.Rol;
+import com.example.demo.entity.TipoLista;
 import com.example.demo.entity.User;
 import com.example.demo.service.ClientService;
+import com.example.demo.service.FuncionarioService;
+import com.example.demo.service.ListTypeService;
 import com.example.demo.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +21,15 @@ public class ClientRestController {
 
     private final ClientService clientService;
     private final RolService rolService;
+    private final ListTypeService typeService;
+    private final FuncionarioService funcionarioService;
 
     @Autowired
-    public ClientRestController(ClientService clientService, RolService rolService) {
+    public ClientRestController(ClientService clientService, RolService rolService, ListTypeService typeService, FuncionarioService funcionarioService) {
         this.clientService = clientService;
         this.rolService = rolService;
+        this.typeService = typeService;
+        this.funcionarioService = funcionarioService;
     }
 
     @GetMapping("/list")
@@ -36,9 +44,15 @@ public class ClientRestController {
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PostMapping("/getUsername/{username}")
-    public ResponseEntity user(@PathVariable String username){
-        var user = this.clientService.findByUsername(username);
-        return new ResponseEntity(user, HttpStatus.OK);
+    @GetMapping("list_type")
+    public ResponseEntity<List<TipoLista>> list(){
+        var data = this.typeService.list();
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping("list_funcionario")
+    public ResponseEntity<List<Funcionario>> list_funcionario(){
+        var data = this.funcionarioService.list();
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
