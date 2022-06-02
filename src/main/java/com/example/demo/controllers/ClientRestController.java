@@ -44,15 +44,21 @@ public class ClientRestController {
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @GetMapping("list_type")
+    @GetMapping("/list_type")
     public ResponseEntity<List<TipoLista>> list(){
         var data = this.typeService.list();
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @GetMapping("list_funcionario")
+    @GetMapping("/list_funcionario")
     public ResponseEntity<List<Funcionario>> list_funcionario(){
         var data = this.funcionarioService.list();
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping("/save-tipolista-list")
+    public ResponseEntity<Void> saveTipoListaList() {
+        typeService.saveListType();
+        return ResponseEntity.ok().build();
     }
 }

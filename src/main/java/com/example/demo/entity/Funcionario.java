@@ -16,8 +16,8 @@ import java.util.UUID;
 public class Funcionario implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FUNCIONARIO")
+    @SequenceGenerator(name = "SEQ_FUNCIONARIO", schema = "auditoria", allocationSize = 1)
     private int id;
 
     @Column(name = "nombre")
@@ -44,7 +44,7 @@ public class Funcionario implements Serializable {
 
     /*  FK  */
     @Column(name = "padre_id")
-    private UUID padreId;
+    private int padreId;
 
     @Column(name = "trabajador")
     private int trabajador;

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ListTypeService {
     List<TipoLista> list();
+
+    void saveListType();
 }

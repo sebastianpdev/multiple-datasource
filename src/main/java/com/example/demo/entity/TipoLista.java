@@ -22,8 +22,8 @@ import java.util.UUID;
 public class TipoLista implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TIPO_LISTA")
+    @SequenceGenerator(name = "SEQ_TIPO_LISTA", schema = "auditoria", allocationSize = 1)
     private Long id;
 
     @Column(name = "nombre")
@@ -34,7 +34,7 @@ public class TipoLista implements Serializable {
 
     /*  FK  */
     @Column(name = "padre_id")
-    private int padreId;
+    private Long padreId;
 
     @Column(name = "created_by")
     @CreatedBy
@@ -43,11 +43,11 @@ public class TipoLista implements Serializable {
     @Column(name = "created_date", updatable = false, nullable = false)
     private Timestamp createdDate;
 
-    @Column(name = "last_modified_by", nullable = false)
+    @Column(name = "last_modified_by")
     @LastModifiedBy
     private String lastModifiedBy;
 
-    @Column(name = "last_modified_date", nullable = false)
+    @Column(name = "last_modified_date")
     @LastModifiedDate
     private Timestamp lastModifiedDate;
 }
