@@ -9,6 +9,7 @@ import com.example.demo.service.FuncionarioService;
 import com.example.demo.service.ListTypeService;
 import com.example.demo.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +46,9 @@ public class ClientRestController {
     }
 
     @GetMapping("/list_type")
-    public ResponseEntity<List<TipoLista>> list(){
-        var data = this.typeService.list();
-        return new ResponseEntity<>(data, HttpStatus.OK);
+    public ResponseEntity<List<TipoLista>> list(Pageable page){
+        var data = this.typeService.list(page);
+        return new ResponseEntity<>(data.getContent(), HttpStatus.OK);
     }
 
     @GetMapping("/list_funcionario")

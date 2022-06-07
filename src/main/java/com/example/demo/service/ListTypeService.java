@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.TipoLista;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ListTypeService {
-    List<TipoLista> list();
+    Page<TipoLista> list(Pageable page);
 
     void saveListType();
 }

@@ -26,10 +26,14 @@ public class DataSourceInterceptor extends HandlerInterceptorAdapter {
                              HttpServletResponse response, Object handler) throws Exception {
 
         BranchContextHolder.clearBranchContext();
-        dataSourceRoutingSingleton.dataSourceRouting.initDatasourceCustom(datasource1(request.getHeader("userDB"),
-                request.getHeader("passwordDB")), request.getHeader("userDB"));
-
-        BranchContextHolder.setBranchContext(request.getHeader("userDB"));
+        String username = datasourceOneDetail.getUsername();
+        String password = datasourceOneDetail.getPassword();
+        if (request.getHeader("userDB") != null && request.getHeader("passwordDB") != null) {
+            username = request.getHeader("userDB");
+            password = request.getHeader("passwordDB");
+        }
+        dataSourceRoutingSingleton.dataSourceRouting.initDatasourceCustom(datasource1(username, password), username);
+        BranchContextHolder.setBranchContext(username);
         return super.preHandle(request, response, handler);
     }
 

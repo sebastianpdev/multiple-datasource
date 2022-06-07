@@ -3,12 +3,13 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.TipoLista;
 import com.example.demo.repository.TypeListRepository;
 import com.example.demo.service.ListTypeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.List;
 
 @Service
 public class ListTypeServiceImpl implements ListTypeService {
@@ -20,8 +21,8 @@ public class ListTypeServiceImpl implements ListTypeService {
     }
 
     @Override
-    public List<TipoLista> list() {
-        return this.typeListRepository.findAll();
+    public Page<TipoLista> list(Pageable page) {
+        return this.typeListRepository.findAll(page);
     }
 
     @Override

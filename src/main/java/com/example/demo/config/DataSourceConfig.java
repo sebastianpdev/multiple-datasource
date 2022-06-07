@@ -46,6 +46,7 @@ public class DataSourceConfig {
         dataSource.setUsername(datasourceOneDetail.getUsername());
         dataSource.setPassword(datasourceOneDetail.getPassword());
         dataSource.setSchema("AUDITORIA");
+        dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
         return dataSource;
     }
 
