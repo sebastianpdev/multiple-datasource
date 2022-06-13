@@ -43,22 +43,8 @@ public class Funcionario implements Serializable {
     private String firma;
 
     /*  FK  */
-    @Column(name = "padre_id")
-    private int padreId;
-
-    @Column(name = "trabajador")
-    private int trabajador;
-
-    /*  FK  */
     @Column(name = "zona_sitec_id")
     private int zonaSitecId;
-
-    /*  FK  */
-    @Column(name = "user_id")
-    private int userId;
-
-    @Column(name = "administrador_empresa")
-    private int administradorEmpresa;
 
     @Column(name = "alias")
     private String alias;

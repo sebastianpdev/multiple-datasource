@@ -37,11 +37,11 @@ public class DataSourceInterceptor extends HandlerInterceptorAdapter {
         return super.preHandle(request, response, handler);
     }
 
-    private DataSource datasource1(String u, String p) {
+    private DataSource datasource1(String username, String password) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(datasourceOneDetail.getUrl());
-        dataSource.setUsername(u);
-        dataSource.setPassword(p);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 }

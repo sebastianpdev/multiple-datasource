@@ -16,6 +16,7 @@ public class DataSourceRouting extends AbstractRoutingDataSource {
 
     public void initDatasource(DataSource datasource1) {
         this.determineCurrentLookupKey();
+        BranchContextHolder.setBranchContext("DATASOURCE1");
         Map<Object, Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put(BranchEnum.DATASOURCE1.toString(), datasource1);
         this.setTargetDataSources(dataSourceMap);
