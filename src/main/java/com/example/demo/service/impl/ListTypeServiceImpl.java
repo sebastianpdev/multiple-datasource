@@ -36,4 +36,13 @@ public class ListTypeServiceImpl implements ListTypeService {
             typeListRepository.save(tipoListaTemp);
         }
     }
+
+    @Override
+    public void saveListOne() {
+        TipoLista tipoListaTemp = new TipoLista();
+        tipoListaTemp.setNombre("Tipo Lista ");
+        tipoListaTemp.setCreatedBy("F");
+        tipoListaTemp.setCreatedDate(Timestamp.from(Instant.now()));
+        typeListRepository.save(tipoListaTemp);
+    }
 }

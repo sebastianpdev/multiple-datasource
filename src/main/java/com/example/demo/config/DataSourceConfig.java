@@ -26,41 +26,41 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DataSourceConfig {
 
-    @Autowired
-    private DatasourceOneDetail datasourceOneDetail;
+  @Autowired
+  private DatasourceOneDetail datasourceOneDetail;
 
-    @Autowired
-    DataSourceRoutingSingleton dataSourceRoutingSingleton;
+  @Autowired
+  DataSourceRoutingSingleton dataSourceRoutingSingleton;
 
-    @Bean
-    @Primary
-    public DataSource dataSource() {
-        dataSourceRoutingSingleton.dataSourceRouting = new DataSourceRouting();
-        dataSourceRoutingSingleton.dataSourceRouting.initDatasource(datasource1());
-        return dataSourceRoutingSingleton.dataSourceRouting;
-    }
+  @Bean
+  @Primary
+  public DataSource dataSource() {
+    dataSourceRoutingSingleton.dataSourceRouting = new DataSourceRouting();
+    dataSourceRoutingSingleton.dataSourceRouting.initDatasource(datasource1());
+    return dataSourceRoutingSingleton.dataSourceRouting;
+  }
 
-    private DataSource datasource1() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl(datasourceOneDetail.getUrl());
-        dataSource.setUsername(datasourceOneDetail.getUsername());
-        dataSource.setPassword(datasourceOneDetail.getPassword());
-        dataSource.setSchema("AUDITORIA");
-        dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
-        return dataSource;
-    }
+  private DataSource datasource1() {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    dataSource.setUrl(datasourceOneDetail.getUrl());
+    dataSource.setUsername(datasourceOneDetail.getUsername());
+    dataSource.setPassword(datasourceOneDetail.getPassword());
+    dataSource.setSchema("AUDITORIA");
+    dataSource.setDriverClassName("oracle.jdbc.OracleDriver");
+    return dataSource;
+  }
 
-    @Bean(name = "entityManager")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
-            EntityManagerFactoryBuilder builder) {
-        return builder.dataSource(dataSource()).packages(User.class)
-                .build();
-    }
+  @Bean(name = "entityManager")
+  public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
+          EntityManagerFactoryBuilder builder) {
+    return builder.dataSource(dataSource()).packages(User.class)
+            .build();
+  }
 
-    @Bean(name = "transactionManager")
-    public JpaTransactionManager transactionManager(
-            @Autowired @Qualifier("entityManager") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
-        return new JpaTransactionManager(entityManagerFactoryBean.getObject());
-    }
+  @Bean(name = "transactionManager")
+  public JpaTransactionManager transactionManager(
+          @Autowired @Qualifier("entityManager") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+    return new JpaTransactionManager(entityManagerFactoryBean.getObject());
+  }
 
 }

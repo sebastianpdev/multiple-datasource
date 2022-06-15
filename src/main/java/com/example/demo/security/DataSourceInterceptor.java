@@ -15,33 +15,33 @@ import javax.sql.DataSource;
 @Component
 public class DataSourceInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private DatasourceOneDetail datasourceOneDetail;
+  @Autowired
+  private DatasourceOneDetail datasourceOneDetail;
 
-    @Autowired
-    DataSourceRoutingSingleton dataSourceRoutingSingleton;
+  @Autowired
+  DataSourceRoutingSingleton dataSourceRoutingSingleton;
 
-    @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response, Object handler) throws Exception {
+  @Override
+  public boolean preHandle(HttpServletRequest request,
+                           HttpServletResponse response, Object handler) throws Exception {
 
-        BranchContextHolder.clearBranchContext();
-        String username = datasourceOneDetail.getUsername();
-        String password = datasourceOneDetail.getPassword();
-        if (request.getHeader("userDB") != null && request.getHeader("passwordDB") != null) {
-            username = request.getHeader("userDB");
-            password = request.getHeader("passwordDB");
-        }
-        dataSourceRoutingSingleton.dataSourceRouting.initDatasourceCustom(datasource1(username, password), username);
-        BranchContextHolder.setBranchContext(username);
-        return super.preHandle(request, response, handler);
+    BranchContextHolder.clearBranchContext();
+    String username = datasourceOneDetail.getUsername();
+    String password = datasourceOneDetail.getPassword();
+    if (request.getHeader("userDB") != null && request.getHeader("passwordDB") != null) {
+      username = request.getHeader("userDB");
+      password = request.getHeader("passwordDB");
     }
+    dataSourceRoutingSingleton.dataSourceRouting.initDatasourceCustom(datasource1(username, password), username);
+    BranchContextHolder.setBranchContext(username);
+    return super.preHandle(request, response, handler);
+  }
 
-    private DataSource datasource1(String username, String password) {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl(datasourceOneDetail.getUrl());
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        return dataSource;
-    }
+  private DataSource datasource1(String username, String password) {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    dataSource.setUrl(datasourceOneDetail.getUrl());
+    dataSource.setUsername(username);
+    dataSource.setPassword(password);
+    return dataSource;
+  }
 }

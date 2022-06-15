@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ListTypeService {
     Page<TipoLista> list(Pageable page);
-
     void saveListType();
+    void saveListOne();
 }
