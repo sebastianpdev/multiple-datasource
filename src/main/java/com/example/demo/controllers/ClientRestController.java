@@ -9,28 +9,20 @@ import com.example.demo.service.FuncionarioService;
 import com.example.demo.service.ListTypeService;
 import com.example.demo.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/client")
 @RefreshScope
 public class ClientRestController {
-
-    @Value("${configuracion.texto}")
-    private String texto;
-
-    @Autowired
-    private Environment environment;
 
     private final ClientService clientService;
     private final RolService rolService;
@@ -81,16 +73,4 @@ public class ClientRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-config")
-    public ResponseEntity<?> getConfig(@Value("${server.port}") String puerto){
-        Map<String, String> json = new HashMap<>();
-        json.put("texto", texto);
-        json.put("puerto", puerto);
-
-        if(environment.getActiveProfiles().length > 0 && environment.getActiveProfiles()[0].equals("dev")){
-            json.put("autor.nombre", environment.getProperty("configuracion.autor.nombre"));
-            json.put("autor.email", environment.getProperty("configuracion.autor.email"));
-        }
-        return new ResponseEntity<>(json, HttpStatus.OK);
-    }
 }
